@@ -1,0 +1,16 @@
+name: EnhancedTools
+version: 1.4
+main: com.github.seaoftrees08.entools.EnhancedTools
+api-version: 1.13
+authors: [Seaoftrees08]
+
+commands:
+  enhancedtools:
+    aliases: entool
+    description: This is EnhancedTools command.
+    usage: /enhancedtools
+    permission: enhancedtools.enhancedtools
+permissions:
+  enhancedtools.enhancedtools:
+    description: enhancedtoolsCommandPermission
+    default: true
