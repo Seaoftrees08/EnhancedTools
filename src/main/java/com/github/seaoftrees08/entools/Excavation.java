@@ -17,7 +17,7 @@ import java.util.List;
 
 public class Excavation {
 
-    List<Block> selectedBlock = new ArrayList<Block>();
+    List<Block> selectedBlock = new ArrayList<>();
     int radius;
 
     public Excavation(Player p, Block b){
