@@ -22,7 +22,7 @@ public class Commands implements CommandExecutor {
             // /entool <radius>
             if(args.length == 1 && isNum(args[0])){
                 int r = parseInt(args[0]);
-                if(r%2 == 0 && r<100){
+                if(r%2 == 0 || r>=100){
                     reply(sender, "掘削半径は1以上100未満の奇数のみ設定可能です");
                 }else if (!ToolSettings.canEnTool(p.getInventory().getItemInMainHand().getType())) {
                     reply(sender, "設定できる道具は、ピッケルかシャベルか斧のみです.");
@@ -102,8 +102,7 @@ public class Commands implements CommandExecutor {
     //入力は数字である前提
     private int parseInt(String s){
         try{
-            int i = Integer.parseInt(s);
-            return i;
+            return Integer.parseInt(s);
         }catch (NumberFormatException e) {
             return 0;
         }
