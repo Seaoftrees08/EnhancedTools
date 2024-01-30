@@ -49,7 +49,7 @@ public class Commands implements CommandExecutor {
                     }else{
                         reply(sender, "Mineallを有効にしました");
                     }
-                    ToolSettings.setMineall(p);
+                    ToolSettings.setMineAll(p);
                 }
 
             // /entool help

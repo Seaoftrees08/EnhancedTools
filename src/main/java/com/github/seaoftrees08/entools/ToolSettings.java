@@ -3,12 +3,13 @@ package com.github.seaoftrees08.entools;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class ToolSettings {
 
@@ -16,7 +17,13 @@ public class ToolSettings {
     public static void setRadius(int radius, Player p){
         ItemMeta meta = p.getInventory().getItemInMainHand().getItemMeta();
 
-        PersistentDataContainer pdc = meta.getPersistentDataContainer();
+        PersistentDataContainer pdc = null;
+        if (meta != null) {
+            pdc = meta.getPersistentDataContainer();
+        }else{
+            EnhancedTools.inst().getLogger().warning("[Enhanced Tools] ItemMeta is null. at setRadius()");
+            return;
+        }
         if(radius!=1){
             pdc.set(getNamespacedKey(), PersistentDataType.INTEGER, radius);
         }else{
@@ -30,24 +37,26 @@ public class ToolSettings {
     public static int getRadius(Player p){
         ItemMeta meta = p.getInventory().getItemInMainHand().getItemMeta();
 
-        int r = meta.getPersistentDataContainer()
+        return Objects.requireNonNull(meta).getPersistentDataContainer()
                 .getOrDefault(getNamespacedKey(), PersistentDataType.INTEGER, 1);
-
-        return r;
     }
 
     public static boolean canEnTool(Material m){
         return m.name().contains("PICKAXE") || m.name().contains("SHOVEL") || m.name().contains("AXE");
     }
 
-    public static void setMineall(Player p){
+    public static void setMineAll(Player p){
         ItemMeta meta = p.getInventory().getItemInMainHand().getItemMeta();
 
-        PersistentDataContainer pdc = meta.getPersistentDataContainer();
+        PersistentDataContainer pdc = meta != null ? meta.getPersistentDataContainer() : null;
+        if(pdc == null){
+            EnhancedTools.inst().getLogger().warning("[Enhanced Tools] ItemMeta is null. at setMineAll()");
+            return;
+        }
         if(!getMineall(p)){
-            pdc.set(getMineallKey(), PersistentDataType.INTEGER, 1);
+            pdc.set(getMineAllKey(), PersistentDataType.INTEGER, 1);
         }else{
-            pdc.remove(getMineallKey());
+            pdc.remove(getMineAllKey());
         }
 
         p.getInventory().getItemInMainHand().setItemMeta(meta);
@@ -56,8 +65,13 @@ public class ToolSettings {
 
     public static boolean getMineall(Player p){
         ItemMeta meta = p.getInventory().getItemInMainHand().getItemMeta();
-        int r = meta.getPersistentDataContainer()
-                .getOrDefault(getMineallKey(), PersistentDataType.INTEGER, 0);
+        int r = 0;
+        if (meta != null) {
+            r = meta.getPersistentDataContainer()
+                    .getOrDefault(getMineAllKey(), PersistentDataType.INTEGER, 0);
+        }else{
+            EnhancedTools.inst().getLogger().warning("[Enhanced Tools] ItemMeta is null. at getMineAll()");
+        }
         return r==1;
     }
 
@@ -82,15 +96,19 @@ public class ToolSettings {
         int r = getRadius(p);
         boolean mineall = getMineall(p);
         ItemMeta meta = p.getInventory().getItemInMainHand().getItemMeta();
+        if(meta==null){
+            EnhancedTools.inst().getLogger().warning("[Enhanced Tools] ItemMeta is null. at setLore()");
+            return;
+        }
         if(r>1){
             if(mineall){
                 meta.setLore(Arrays.asList("掘削半径: "+r, "Mineall: 有効"));
             }else{
-                meta.setLore(Arrays.asList("掘削半径: "+r));
+                meta.setLore(List.of("掘削半径: " + r));
             }
         }else{
             if(mineall){
-                meta.setLore(Arrays.asList("MineAll: 有効"));
+                meta.setLore(List.of("MineAll: 有効"));
             }else{
                 meta.setLore(null);
             }
@@ -101,7 +119,7 @@ public class ToolSettings {
     private static NamespacedKey getNamespacedKey(){
         return new NamespacedKey(EnhancedTools.inst(), "enhancedtools");
     }
-    private static NamespacedKey getMineallKey(){
+    private static NamespacedKey getMineAllKey(){
         return new NamespacedKey(EnhancedTools.inst(), "enhancedtools_mineall");
     }
 }

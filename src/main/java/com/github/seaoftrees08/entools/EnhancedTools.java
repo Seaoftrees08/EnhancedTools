@@ -2,6 +2,8 @@ package com.github.seaoftrees08.entools;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 public final class EnhancedTools extends JavaPlugin {
 
     private static EnhancedTools instance;
@@ -9,7 +11,7 @@ public final class EnhancedTools extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        getCommand("enhancedtools").setExecutor(new Commands());
+        Objects.requireNonNull(getCommand("enhancedtools")).setExecutor(new Commands());
         new PlayerListeners(this);
 
         instance = this;

@@ -36,7 +36,7 @@ public class Excavation {
 
     public Excavation(Block b, Player p){
         Location l = b.getLocation().clone();
-        select(l, l.clone().add(10,10,10), l.clone().add(-10,-10,-10), b.getType());
+        select(l, l.clone().add(20,20,20), l.clone().add(-20,-20,-20), b.getType());
         work(p);
     }
 
@@ -69,7 +69,7 @@ public class Excavation {
     }
 
     private void select(Location l, Location l1, Location l2, Material type){
-        if(selectedBlock.size()!=0 && selectedBlock.contains(l.getBlock())) return;
+        if(!selectedBlock.isEmpty() && selectedBlock.contains(l.getBlock())) return;
         if(!inArea(l, l1, l2)) return;
         if(!l.getBlock().getType().equals(type)) return;
 
