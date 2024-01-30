@@ -12,12 +12,10 @@ public class Commands implements CommandExecutor {
 
         if(label.equalsIgnoreCase("enhancedtools") || label.equalsIgnoreCase("entool")){
 
-            if(!(sender instanceof Player)){
+            if(!(sender instanceof Player p)){
                 reply(sender, ChatColor.RED + "Only player can use this command.");
                 return false;
             }
-
-            Player p = (Player) sender;
 
             // /entool <radius>
             if(args.length == 1 && isNum(args[0])){
@@ -102,8 +100,7 @@ public class Commands implements CommandExecutor {
     //入力は数字である前提
     private int parseInt(String s){
         try{
-            int i = Integer.parseInt(s);
-            return i;
+            return Integer.parseInt(s);
         }catch (NumberFormatException e) {
             return 0;
         }

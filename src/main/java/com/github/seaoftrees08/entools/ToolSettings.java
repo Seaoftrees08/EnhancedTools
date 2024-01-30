@@ -17,13 +17,12 @@ public class ToolSettings {
     public static void setRadius(int radius, Player p){
         ItemMeta meta = p.getInventory().getItemInMainHand().getItemMeta();
 
-        PersistentDataContainer pdc = null;
-        if (meta != null) {
-            pdc = meta.getPersistentDataContainer();
-        }else{
+        PersistentDataContainer pdc = meta != null ? meta.getPersistentDataContainer() : null;
+        if(pdc == null){
             EnhancedTools.inst().getLogger().warning("[Enhanced Tools] ItemMeta is null. at setRadius()");
             return;
         }
+
         if(radius!=1){
             pdc.set(getNamespacedKey(), PersistentDataType.INTEGER, radius);
         }else{
