@@ -20,6 +20,7 @@ public class Excavation {
     List<Block> selectedBlock = new ArrayList<>();
     int radius;
 
+    //for Excavation
     public Excavation(Player p, Block b){
         radius = ToolSettings.getRadius(p);
         double pitch = p.getLocation().clone().getPitch();
@@ -34,10 +35,18 @@ public class Excavation {
         work(p);
     }
 
+    //for MineAll
     public Excavation(Block b, Player p){
         Location l = b.getLocation().clone();
         select(l, l.clone().add(20,20,20), l.clone().add(-20,-20,-20), b.getType());
         work(p);
+    }
+
+    //for Plow(耕す)
+    public Excavation(Player p, Block b, int radius){
+        this.radius = radius;
+        xzSelect(b);
+        plow(p);
     }
 
     private void xzSelect(Block b){
@@ -92,13 +101,23 @@ public class Excavation {
 
     private void work(Player p){
         ItemStack tool = p.getInventory().getItemInMainHand();
-
         consumption(p, selectedBlock.size());
 
         new BukkitRunnable(){
             @Override
             public void run() {
                 for(Block b : selectedBlock) b.breakNaturally(tool);
+            }
+        }.run();
+    }
+
+    private void plow(Player p){
+        consumption(p, selectedBlock.size());
+
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                for(Block b : selectedBlock) if(b.getType().equals(Material.GRASS_BLOCK) || b.getType().equals(Material.DIRT)) b.setType(Material.FARMLAND);
             }
         }.run();
     }

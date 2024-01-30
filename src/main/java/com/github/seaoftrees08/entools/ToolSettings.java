@@ -41,7 +41,7 @@ public class ToolSettings {
     }
 
     public static boolean canEnTool(Material m){
-        return m.name().contains("PICKAXE") || m.name().contains("SHOVEL") || m.name().contains("AXE");
+        return m.name().contains("PICKAXE") || m.name().contains("SHOVEL") || m.name().contains("AXE") || m.name().contains("HOE");
     }
 
     public static void setMineAll(Player p){
@@ -101,10 +101,12 @@ public class ToolSettings {
             return;
         }
         if(r>1){
-            if(mineall){
-                meta.setLore(Arrays.asList("Mine Radius: "+r, "Mineall: 有効"));
+            if(mineall) {
+                meta.setLore(Arrays.asList("掘削半径: " + r, "Mineall: 有効"));
+            }else if(p.getInventory().getItemInMainHand().getType().name().contains("HOE")){
+                meta.setLore(List.of("農耕半径: " + r));
             }else{
-                meta.setLore(List.of("Mine Radius: " + r));
+                meta.setLore(List.of("掘削半径: " + r));
             }
         }else{
             if(mineall){

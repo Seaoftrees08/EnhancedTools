@@ -1,8 +1,13 @@
 package com.github.seaoftrees08.entools;
 
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+
+import java.util.Objects;
 
 public class PlayerListeners implements Listener {
 
@@ -23,8 +28,14 @@ public class PlayerListeners implements Listener {
             e.setCancelled(true);
             new Excavation(e.getPlayer(), e.getBlock());
         }
+    }
 
-
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent e) {
+        if (e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if (!e.getPlayer().getInventory().getItemInMainHand().getType().name().contains("HOE")) return;
+        int radius = ToolSettings.getRadius(e.getPlayer());
+        new Excavation(e.getPlayer(), e.getClickedBlock(), radius);
     }
 
 }
