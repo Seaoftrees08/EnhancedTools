@@ -1,13 +1,11 @@
 package com.github.seaoftrees08.entools;
 
-import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.Objects;
 
 public class PlayerListeners implements Listener {
 
