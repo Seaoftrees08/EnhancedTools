@@ -79,16 +79,17 @@ public class ToolSettings {
     }
 
     public static boolean breakBlock(Material m){
-        return m.equals(Material.COAL_ORE)
-                || m.equals(Material.IRON_ORE)
-                || m.equals(Material.LAPIS_ORE)
-                || m.equals(Material.GOLD_ORE)
-                || m.equals(Material.NETHER_GOLD_ORE)
-                || m.equals(Material.DIAMOND_ORE)
-                || m.equals(Material.REDSTONE_ORE)
-                || m.equals(Material.EMERALD_ORE)
-                || m.equals(Material.GLOWSTONE)
-                || m.equals(Material.NETHER_QUARTZ_ORE);
+        return m.name().contains(Material.COAL_ORE.name())
+                || m.name().contains(Material.IRON_ORE.name())
+                || m.name().contains(Material.COPPER_ORE.name())
+                || m.name().contains(Material.LAPIS_ORE.name())
+                || m.name().contains(Material.GOLD_ORE.name())
+                || m.name().contains(Material.DIAMOND_ORE.name())
+                || m.name().contains(Material.REDSTONE_ORE.name())
+                || m.name().contains(Material.EMERALD.name())
+                || m.name().contains(Material.GLOWSTONE.name())
+                || m.name().contains(Material.NETHER_QUARTZ_ORE.name())
+                || m.name().contains(Material.ANCIENT_DEBRIS.name());
     }
 
     private static void setLore(Player p){
@@ -101,9 +102,9 @@ public class ToolSettings {
         }
         if(r>1){
             if(mineall){
-                meta.setLore(Arrays.asList("掘削半径: "+r, "Mineall: 有効"));
+                meta.setLore(Arrays.asList("Mine Radius: "+r, "Mineall: 有効"));
             }else{
-                meta.setLore(List.of("掘削半径: " + r));
+                meta.setLore(List.of("Mine Radius: " + r));
             }
         }else{
             if(mineall){
