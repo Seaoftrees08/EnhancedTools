@@ -12,12 +12,10 @@ public class Commands implements CommandExecutor {
 
         if(label.equalsIgnoreCase("enhancedtools") || label.equalsIgnoreCase("entool")){
 
-            if(!(sender instanceof Player)){
+            if(!(sender instanceof Player p)){
                 reply(sender, ChatColor.RED + "Only player can use this command.");
                 return false;
             }
-
-            Player p = (Player) sender;
 
             // /entool <radius>
             if(args.length == 1 && isNum(args[0])){
@@ -25,10 +23,15 @@ public class Commands implements CommandExecutor {
                 if(r%2 == 0 || r>=100){
                     reply(sender, "掘削半径は1以上100未満の奇数のみ設定可能です");
                 }else if (!ToolSettings.canEnTool(p.getInventory().getItemInMainHand().getType())) {
-                    reply(sender, "設定できる道具は、ピッケルかシャベルか斧のみです.");
+                    reply(sender, "設定できる道具は、ピッケルかシャベルか斧か鍬のみです.");
                 }else{
                     ToolSettings.setRadius(r, p);
-                    reply(sender, "掘削半径を " + args[0] + " にしました.");
+                    if(p.getInventory().getItemInMainHand().getType().name().contains("HOE")) {
+                        reply(sender, "農耕半径を " + args[0] + " にしました.");
+                    }else{
+                        reply(sender, "掘削半径を " + args[0] + " にしました.");
+                    }
+
                 }
 
             // /entool conf
